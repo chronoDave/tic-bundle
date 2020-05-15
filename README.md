@@ -16,13 +16,13 @@ npm install
 
 Simply write your js code in the `src` folder and run `yarn start`, it'll automatically bundle your code for you.
 
-The order the files are bundled are dictated by the file name. Simply add `_<number>` to indicate the order.
+The order the files are bundled are dictated by the file name. Simply add `<number>_` to indicate the order.
 
 Babel is included as well, meaning modern JS syntax is supported.
 
 <b>Example:</b>
 
-`src/main_2.js`
+`src/2_main.js`
 
 ```
 const TIC = () => {
@@ -30,7 +30,7 @@ const TIC = () => {
 };
 ```
 
-`src/ui_1.js`
+`src/1_ui.js`
 
 ```
 function ui() {

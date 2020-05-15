@@ -15,8 +15,6 @@ const bundle = async () => {
     .map(file => {
       const order = file
         .split('_')
-        .pop()
-        .split('.')
         .shift();
       const body = fs.readFileSync(file, 'utf-8');
 
