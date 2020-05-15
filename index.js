@@ -13,18 +13,22 @@ const bundle = async () => {
 
   const outputFile = files
     .map(file => {
-      const rawFile = fs.readFileSync(file, 'utf-8');
+      const order = file
+        .split('_')
+        .pop()
+        .split('.')
+        .shift();
+      const body = fs.readFileSync(file, 'utf-8');
 
-      const header = rawFile.split('\n').shift();
-      const body = rawFile.split('\n').slice(2).join('\n');
-
-      return ({ header, body });
+      return ({ order, body });
     })
-    .sort((a, b) => a.header - b.header)
+    .sort((a, b) => a.order - b.order)
     .map(({ body }) => body)
     .join('\n');
 
-  const { code } = Babel.transform(outputFile, {
+  const ticFile = ['// script: js', outputFile].join('\n\n');
+
+  const { code } = Babel.transform(ticFile, {
     presets: ['env'],
     sourceType: 'script',
     retainLines: true

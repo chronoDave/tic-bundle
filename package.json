@@ -8,7 +8,7 @@
   "license": "GPLv3",
   "private": true,
   "scripts": {
-    "start": "nodemon --watch src --watch index.js index.js"
+    "start": "nodemon --watch src index.js"
   },
   "dependencies": {
     "@babel/standalone": "^7.9.6",

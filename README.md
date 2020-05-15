@@ -15,42 +15,41 @@ npm install
 ## Usage
 
 Simply write your js code in the `src` folder and run `yarn start`, it'll automatically bundle your code for you.
-To make sure it's bundled in the right order, the first two lines are dedicated to "metadata". Simply add a digit to indicate what order the file should be loaded.
+
+The order the files are bundled are dictated by the file name. Simply add `_<number>` to indicate the order.
 
 Babel is included as well, meaning modern JS syntax is supported.
 
 <b>Example:</b>
 
-`src/main.js`
+`src/main_2.js`
 
 ```
-1
+const TIC = () => {
 
-function main() {
-  return 'main'
-}
+};
 ```
 
-`src/ui.js`
+`src/ui_1.js`
 
 ```
-2
-
 function ui() {
-  return 'ui'
-}
+  return 'ui';
+};
 ```
 
 <b>Output:</b>
 
-`main.js`
+`build.js`
 
 ```
-function main() {
-  return 'main'
-}
+// script: js
 
 function ui() {
-  return 'ui'
-}
+  return 'ui';
+};
+
+var TIC = function TIC() {
+
+};
 ```
