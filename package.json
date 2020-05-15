@@ -1,0 +1,17 @@
+{
+  "name": "tic-bundle",
+  "version": "1.0.0",
+  "description": "Multi-file development in TIC-80",
+  "main": "index.js",
+  "repository": "https://github.com/chronoDave/tic-bundle.git",
+  "author": "Chronocide",
+  "license": "GPLv3",
+  "private": true,
+  "scripts": {
+    "start": "nodemon --watch src --watch index.js index.js"
+  },
+  "dependencies": {
+    "glob": "^7.1.6",
+    "nodemon": "^2.0.4"
+  }
+}
