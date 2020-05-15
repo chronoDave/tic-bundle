@@ -1,26 +1,36 @@
 const glob = require('glob');
 const fs = require('fs');
+const Babel = require('@babel/standalone');
 
-const bundle = () => {
-  glob('src/*.js', {}, (err, files) => {
-    const fileData = [];
+const globPromise = (path, options = {}) => new Promise((resolve, reject) => (
+  glob(path, options, (err, files) => {
+    if (err) return reject(err);
+    return resolve(files);
+  })));
 
-    files.forEach(file => {
-      const fileString = fs.readFileSync(file, 'utf-8');
+const bundle = async () => {
+  const files = await globPromise('src/*.js');
 
-      const fileHeader = fileString.split('\n').shift();
-      const fileBody = fileString.split('\n').slice(2).join('\n');
+  const outputFile = files
+    .map(file => {
+      const rawFile = fs.readFileSync(file, 'utf-8');
 
-      fileData.push({ order: fileHeader, body: fileBody });
-    });
+      const header = rawFile.split('\n').shift();
+      const body = rawFile.split('\n').slice(2).join('\n');
 
-    const outputFile = fileData
-      .sort((a, b) => a.order - b.order)
-      .map(({ body }) => body)
-      .join('\n')
+      return ({ header, body });
+    })
+    .sort((a, b) => a.header - b.header)
+    .map(({ body }) => body)
+    .join('\n');
 
-    fs.writeFileSync('main.js', outputFile);
+  const { code } = Babel.transform(outputFile, {
+    presets: ['env'],
+    sourceType: 'script',
+    retainLines: true
   });
+
+  fs.writeFileSync('build.js', code);
 };
 
 bundle();

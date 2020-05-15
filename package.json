@@ -11,6 +11,10 @@
     "start": "nodemon --watch src --watch index.js index.js"
   },
   "dependencies": {
+    "@babel/standalone": "^7.9.6",
+    "babel-preset-env": "^1.7.0",
+    "eslint": "^7.0.0",
+    "eslint-config-airbnb-base": "^14.1.0",
     "glob": "^7.1.6",
     "nodemon": "^2.0.4"
   }

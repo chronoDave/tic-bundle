@@ -17,6 +17,8 @@ npm install
 Simply write your js code in the `src` folder and run `yarn start`, it'll automatically bundle your code for you.
 To make sure it's bundled in the right order, the first two lines are dedicated to "metadata". Simply add a digit to indicate what order the file should be loaded.
 
+Babel is included as well, meaning modern JS syntax is supported.
+
 <b>Example:</b>
 
 `src/main.js`
