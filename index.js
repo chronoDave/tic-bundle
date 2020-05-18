@@ -2,37 +2,26 @@ const glob = require('glob');
 const fs = require('fs');
 const Babel = require('@babel/standalone');
 
-const globPromise = (path, options = {}) => new Promise((resolve, reject) => (
-  glob(path, options, (err, files) => {
-    if (err) return reject(err);
-    return resolve(files);
-  })));
-
-const bundle = async () => {
-  const files = await globPromise('src/*.js');
+const bundle = async (path, name) => {
+  const files = glob.sync(path);
 
   const outputFile = files
-    .map(file => {
-      const order = file
-        .split('_')
-        .shift();
-      const body = fs.readFileSync(file, 'utf-8');
-
-      return ({ order, body });
-    })
+    .filter(file => !file.includes('ignore'))
+    .map(file => ({
+      order: file.split('_').shift(),
+      body: fs.readFileSync(file, 'utf-8')
+    }))
     .sort((a, b) => a.order - b.order)
-    .map(({ body }) => body)
-    .join('\n');
+    .map(({ body }) => body.trim())
+    .join('\n\n');
 
-  const ticFile = ['// script: js', outputFile].join('\n\n');
-
-  const { code } = Babel.transform(ticFile, {
+  const { code } = Babel.transform(outputFile, {
     presets: ['env'],
     sourceType: 'script',
     retainLines: true
   });
 
-  fs.writeFileSync('build.js', code);
+  fs.writeFileSync(`${name}.js`, `// script: js\n\n${code}`);
 };
 
-bundle();
+bundle('src/*.js', 'build');
