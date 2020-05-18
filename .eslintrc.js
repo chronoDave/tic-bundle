@@ -7,6 +7,7 @@ module.exports = {
     'comma-dangle': 'off',
     'arrow-body-style': 'warn',
     'arrow-parens': ['error', 'as-needed'],
-    'no-nested-ternary': 'off'
+    'no-nested-ternary': 'off',
+    camelcase: 'off'
   }
 };

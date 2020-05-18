@@ -2,8 +2,13 @@ const glob = require('glob');
 const fs = require('fs');
 const Babel = require('@babel/standalone');
 
-const bundle = async (path, name) => {
-  const files = glob.sync(path);
+const bundle = async () => {
+  const {
+    npm_package_ticbundle_output,
+    npm_package_ticbundle_dir
+  } = process.env;
+
+  const files = glob.sync(`${npm_package_ticbundle_dir || 'src'}/*.js`);
 
   const outputFile = files
     .filter(file => !file.includes('ignore'))
@@ -21,7 +26,7 @@ const bundle = async (path, name) => {
     retainLines: true
   });
 
-  fs.writeFileSync(`${name}.js`, `// script: js\n\n${code}`);
+  fs.writeFileSync(`${npm_package_ticbundle_output || 'build'}.js`, `// script: js\n\n${code}`);
 };
 
-bundle('src/*.js', 'build');
+bundle();

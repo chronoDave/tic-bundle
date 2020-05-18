@@ -1,30 +1,37 @@
 # tic-bundle
 
-Imagine not being able to use multiple files for development in 2020.
+Simple file bundler for JavaScript development in TIC-80.
+
+`tic-bundle` comes with [Babel](https://babeljs.io/docs/en/babel-preset-env) pre-installed. Please note that polyfills are not supported.
 
 ## Installation
 
 ```
-// Yarn (development)
+// Yarn
 yarn
 
-// Yarn (production)
-yarn --prod
-
-// Npm (development)
+// Npm
 npm install
+```
 
-// Npm (production)
-npm install --only=prod
+## Configuration
+
+`tic-bundle` accepts the following configuration options in the `package.json`:
+
+```
+"ticbundle": {
+  "dir": "src", // folder tic-bundle should watch, 'src' by default
+  "output": "output" // generated output file name, 'build' by default
+}
 ```
 
 ## Usage
 
-Simply write your js code in the `src` folder and run `yarn start`, it'll  bundle your code for you. If you prefer bundling whilst developing, use `yarn watch`, it'll bundle the code every save.
+1) Create `src` folder
+2) Write JavaScript code
+3) Run `yarn start` for a single build, `yarn watch` for building on save
 
-The order the files are bundled are dictated by the file name. Simply add `<number>_` to indicate the order. Files with `ignore` in the file name will be ignored.
-
-Babel is included as well, meaning modern JS syntax is supported.
+The order in which `tic-bundle` places the files is determined by a `<number>_` prefix (e.g. `1_index.js`). Files can be ignored by using `ignore` in the filename.
 
 <b>Example:</b>
 
@@ -34,6 +41,12 @@ Babel is included as well, meaning modern JS syntax is supported.
 const TIC = () => {
 
 };
+```
+
+`src/2_ignore.js`
+
+```
+// This is ignored
 ```
 
 `src/1_ui.js`
