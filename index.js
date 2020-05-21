@@ -1,32 +1,60 @@
-const glob = require('glob');
+const chokidar = require('chokidar');
 const fs = require('fs');
+const path = require('path');
+const glob = require('glob');
 const Babel = require('@babel/standalone');
 
+const getConfig = () => new Promise(resolve => (
+  fs.readFile('config.json', (err, file) => {
+    const defaultConfig = {
+      src: 'src',
+      output: './',
+      name: 'build'
+    };
+
+    if (err || !file) {
+      resolve(defaultConfig);
+    } else {
+      resolve({
+        ...defaultConfig,
+        ...JSON.parse(file)
+      });
+    }
+  })
+));
+
 const bundle = async () => {
-  const {
-    npm_package_ticbundle_output,
-    npm_package_ticbundle_dir
-  } = process.env;
+  const config = await getConfig();
 
-  const files = glob.sync(`${npm_package_ticbundle_dir || 'src'}/*.js`);
+  chokidar
+    .watch(config.src)
+    .on('all', () => {
+      console.log(`[${new Date().toISOString()}] Folder change detected`);
 
-  const outputFile = files
-    .filter(file => !file.includes('ignore'))
-    .map(file => ({
-      order: file.split('_').shift(),
-      body: fs.readFileSync(file, 'utf-8')
-    }))
-    .sort((a, b) => a.order - b.order)
-    .map(({ body }) => body.trim())
-    .join('\n\n');
+      const files = glob.sync(path.resolve(config.src, '*.js'));
+      const buildFile = files
+        .filter(file => !file.includes('ignore'))
+        .map(file => ({
+          order: file.split('_').shift(),
+          body: fs.readFileSync(file, 'utf-8')
+        }))
+        .sort((a, b) => a.order - b.order)
+        .map(({ body }) => body.trim())
+        .join('\n\n');
 
-  const { code } = Babel.transform(outputFile, {
-    presets: ['env'],
-    sourceType: 'script',
-    retainLines: true
-  });
+      const { code } = Babel.transform(buildFile, {
+        presets: ['env'],
+        sourceType: 'script',
+        retainLines: true
+      });
 
-  fs.writeFileSync(`${npm_package_ticbundle_output || 'build'}.js`, `// script: js\n\n${code}`);
+      fs.writeFileSync(
+        path.resolve(config.output, `${config.name}.js`),
+        `// script: js\n\n${code}`
+      );
+
+      console.log(`[${new Date().toISOString()}] Build file generated`);
+    });
 };
 
 bundle();

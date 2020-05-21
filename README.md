@@ -16,24 +16,39 @@ npm install
 
 ## Configuration
 
-`tic-bundle` accepts the following configuration options in the `package.json`:
+`tic-bundle` accepts the following configuration options in `config.json`:
 
 ```
-"ticbundle": {
-  "dir": "src", // folder tic-bundle should watch, 'src' by default
-  "output": "output" // generated output file name, 'build' by default
+{
+  "src": "src" // Folder to watch, default "src"
+  "output": "./", // Folder to output to, default "./"
+  "name": "build" // Name of build file, default "build"
 }
 ```
 
+If no `config.json` is found, `tic-bundle` will use the default values.
+
 ## Usage
 
-1) Create `src` folder
-2) Write JavaScript code
-3) Run `yarn start` for a single build, `yarn watch` for building on save
+1) Create `config.json` (optional)
+2) Write JavaScript code in `src` folder
+3) Run `yarn start`
 
-The order in which `tic-bundle` places the files is determined by a `<number>_` prefix (e.g. `1_index.js`). Files can be ignored by using `ignore` in the filename.
+The order in which `tic-bundle` places the files is determined by a `<number>_` prefix (e.g. `1_index.js`).
+
+Files can be ignored by using `ignore` in the filename.
 
 <b>Example:</b>
+
+`config.json`
+
+```
+{
+  "src": "src",
+  "output": "./",
+  "name": "build"
+}
+```
 
 `src/2_main.js`
 

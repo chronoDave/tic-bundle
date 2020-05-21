@@ -8,14 +8,13 @@
   "license": "GPLv3",
   "private": true,
   "scripts": {
-    "start": "node index.js",
-    "watch": "nodemon --watch src index.js"
+    "start": "node index.js"
   },
   "dependencies": {
     "@babel/standalone": "^7.9.6",
     "babel-preset-env": "^1.7.0",
-    "glob": "^7.1.6",
-    "nodemon": "^2.0.4"
+    "chokidar": "^3.4.0",
+    "glob": "^7.1.6"
   },
   "devDependencies": {
     "eslint": "^7.0.0",
