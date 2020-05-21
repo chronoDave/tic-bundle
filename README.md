@@ -1,5 +1,7 @@
 # tic-bundle
 
+![screenshot of tic-bundle being used in a terminal](https://i.imgur.com/UVHUMTK.jpg)
+
 Simple file bundler for JavaScript development in TIC-80.
 
 `tic-bundle` comes with [Babel](https://babeljs.io/docs/en/babel-preset-env) pre-installed. Please note that polyfills are not supported.
