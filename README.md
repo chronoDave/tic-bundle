@@ -20,13 +20,10 @@ npm install
 
 `tic-bundle` accepts the following configuration options in `config.json`:
 
-```
-{
-  "src": "src" // Folder to watch, default "src"
-  "output": "./", // Folder to output to, default "./"
-  "name": "build" // Name of build file, default "build"
-}
-```
+- `src` Folder to watch. Defaults to `src`.
+- `output` Output folder. Defaults to `./`.
+- `ignore` File(s) to ignore. Defaults to `["ignore"]`.
+- `name` Name of build file. Defaults to `build`
 
 If no `config.json` is found, `tic-bundle` will use the default values.
 
@@ -37,8 +34,6 @@ If no `config.json` is found, `tic-bundle` will use the default values.
 3) Run `yarn start`
 
 The order in which `tic-bundle` places the files is determined by a `<number>_` prefix (e.g. `1_index.js`).
-
-Files can be ignored by using `ignore` in the filename.
 
 <b>Example:</b>
 

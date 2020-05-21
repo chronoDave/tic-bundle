@@ -9,6 +9,7 @@ const getConfig = () => new Promise(resolve => (
     const defaultConfig = {
       src: 'src',
       output: './',
+      ignore: ['ignore'],
       name: 'build'
     };
 
@@ -25,15 +26,19 @@ const getConfig = () => new Promise(resolve => (
 
 const bundle = async () => {
   const config = await getConfig();
+  const srcFiles = path.resolve(config.src, '*.js');
 
   chokidar
-    .watch(config.src)
+    .watch(srcFiles, { ignored: new RegExp(config.ignore.join('|')) })
     .on('all', () => {
       console.log(`[${new Date().toISOString()}] Folder change detected`);
 
-      const files = glob.sync(path.resolve(config.src, '*.js'));
+      const files = glob.sync(srcFiles);
       const buildFile = files
-        .filter(file => !file.includes('ignore'))
+        .filter(file => config.ignore
+          .map(item => file.includes(item))
+          .filter(item => item)
+          .length === 0)
         .map(file => ({
           order: file.split('_').shift(),
           body: fs.readFileSync(file, 'utf-8')
