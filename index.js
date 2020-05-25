@@ -10,6 +10,7 @@ const getConfig = () => new Promise(resolve => (
       src: 'src',
       output: './',
       ignore: ['ignore'],
+      babel: {},
       name: 'build'
     };
 
@@ -50,7 +51,7 @@ const bundle = async () => {
       const { code } = Babel.transform(buildFile, {
         presets: ['env'],
         sourceType: 'script',
-        retainLines: true
+        ...config.babel
       });
 
       fs.writeFileSync(

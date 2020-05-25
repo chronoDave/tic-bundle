@@ -24,6 +24,7 @@ npm install
 - `output` Output folder. Defaults to `./`.
 - `ignore` File(s) to ignore. Defaults to `["ignore"]`.
 - `name` Name of build file. Defaults to `build`
+- `babel` Babel options, see [Babel - Options](https://babeljs.io/docs/en/options) for more information. Defaults to `{}`
 
 If no `config.json` is found, `tic-bundle` will use the default values.
 
