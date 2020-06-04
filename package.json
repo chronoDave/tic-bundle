@@ -1,5 +1,5 @@
 {
-  "name": "tic-bundle",
+  "name": "tic80-bundle",
   "version": "1.0.0",
   "description": "Multi-file development in TIC-80",
   "main": "index.js",
