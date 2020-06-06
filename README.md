@@ -1,6 +1,6 @@
 # tic80-bundle
 
-![screenshot of tic80-bundle being used in a terminal](https://i.imgur.com/MrNWGGI.png)
+![tic80-bundle logo](https://i.imgur.com/HqfxnMH.png)
 
 Simple file bundler for JavaScript development in [TIC-80](https://tic.computer/).
 
