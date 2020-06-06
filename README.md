@@ -19,12 +19,16 @@ npm install
 ## Usage
 
 ```
+// Yarn
 yarn start
+
+// Npm
+npm start
 ```
 
 ## Configuration
 
-Configuration is optional, `tic80-bundle` will watch `src` by default and output `build.js` in the current directory. `ignore` directory and files containing `ignore` are ignored by default.
+Configuration is optional, `tic80-bundle` will watch `src` by default and output `build.js` in the current directory. `ignore` directory and files containing `ignore` are ignored by default. The buildfile itself is also ignored
 
 `config.json`:
 

@@ -32,7 +32,7 @@ const getConfig = () => new Promise(resolve => {
 
 const bundle = async () => {
   const config = await getConfig();
-  const filePattern = path.resolve(config.entry, '*.js');
+  const filePattern = `${path.resolve(config.entry)}/**/*.js`;
   const ignored = config.build.ignore
     .reduce((acc, cur) => ([
       ...acc,
