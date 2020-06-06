@@ -72,7 +72,15 @@ The specificity is as folows:
 
 ## Example
 
-`src/2_main.js`
+`src/3_ui.js`
+
+```
+function ui() {
+  return 'ui';
+};
+```
+
+`src/1_main.js`
 
 ```
 const TIC = () => {
@@ -80,18 +88,10 @@ const TIC = () => {
 };
 ```
 
-`src/3_ignore.js`
+`src/2_ignore.js`
 
 ```
 // This is ignored
-```
-
-`src/1_ui.js`
-
-```
-function ui() {
-  return 'ui';
-};
 ```
 
 <b>Output</b>
