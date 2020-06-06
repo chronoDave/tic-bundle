@@ -1,53 +1,70 @@
-# tic80-bundle
+![tic-bundle logo](https://i.imgur.com/HqfxnMH.png)
 
-![tic80-bundle logo](https://i.imgur.com/HqfxnMH.png)
+# tic-bundle
 
-Simple file bundler for JavaScript development in [TIC-80](https://tic.computer/).
+Simple CLI tool for bundling JavaScript code for [TIC-80](https://tic.computer/).
 
-`tic80-bundle` comes with [Babel](https://babeljs.io/docs/en/babel-preset-env) pre-installed. Please note that polyfills are not supported.
+`tic-bundle` comes with [Babel](https://babeljs.io/docs/en/babel-preset-env) pre-installed. Please note that polyfills are not supported.
 
 ## Installation
 
 ```
 // Yarn
-yarn
+yarn add tic-bundle --dev
 
 // Npm
-npm install
+yarn install tic-bundle --save-dev
 ```
 
 ## Usage
 
-```
-// Yarn
-yarn start
+`package.json`
 
-// Npm
-npm start
+```
+{
+  "scripts": {
+    "watch": tic-bundle src
+  }
+}
 ```
 
 ## Configuration
 
-Configuration is optional, `tic80-bundle` will watch `src` by default and output `build.js` in the current directory. `ignore` directory and files containing `ignore` are ignored by default. The buildfile itself is also ignored
+`tic-bundle` supports config files. By default, `tic-bundle` looks for a `.ticbundle.json` file in the current directory, but an alternative location can be specified using `-c <file>` or `--config <file>`. 
 
-`config.json`:
+The specificity is as folows:
+
+ - CLI argument
+ - `.ticbundle.json`
+ - Default values
+
+<b>Default config</b>
 
 ```
 {
-  entry: 'src', // Folder to watch for change
+  entry: 'src',
   output: {
-    path: './', // Output path
-    filename: 'build' // Build file name
+    path: './',
+    filename: 'build',
   },
   build: {
-    order: {} // Build order { <number>: <filename> }, e.g. { 3: 'main' },
-    ignore: ['ignore'] // Array of file / folders to ignore
+    order: {},
+    ignore: ['ignore']
   },
-  babel: {} // Babel options
+  babel: {}
 }
 ```
 
-<b>Example:</b>
+### Options
+
+ - `entry` (default `src`) - Folder to watch.
+ - `output.path` (default `./`) - Bundled file output path.
+ - `output.filename` (default `build`) - Bundled file name.
+ - `build.order` (default `{}`) - Order to bundle files in. This is an object containing filename and index. For example `{ build: 3 }` would put `build.js` on the 3rd position. If the file is not found in `build.order`, `tic-bundle` sorts on filename, but `_` can be used as a delimiter. For example `2_index.js` would put `index.js` on the 2nd position.
+ - `build.ignore` (default `['ignore']`) - Files & folders to ignore. Every values gets globbed into `**/<value>` and `**/<value>.js`. The output file is ignored by default.
+ - `babel` (default `{}`) - [Babel options](https://babeljs.io/docs/en/options). 
+
+## Example
 
 `src/2_main.js`
 
@@ -71,7 +88,7 @@ function ui() {
 };
 ```
 
-<b>Output:</b>
+<b>Output</b>
 
 `build.js`
 
@@ -86,3 +103,11 @@ function ui() {
   return 'ui';
 };
 ```
+
+## Donating
+
+[![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/Y8Y41E23T)
+
+## License
+
+GNU General Public License v3.0, see [LICENSE](./LICENSE) file.

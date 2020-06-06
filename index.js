@@ -1,14 +1,24 @@
-const chokidar = require('chokidar');
+#!/usr/bin/env node
+const minimist = require('minimist');
 const fs = require('fs');
 const path = require('path');
-const glob = require('glob');
 const deepmerge = require('deepmerge');
+const chokidar = require('chokidar');
+const glob = require('glob');
 const Babel = require('@babel/standalone');
 
+const argv = minimist(process.argv.slice(2), {
+  alias: {
+    entry: 'e',
+    config: 'c',
+    output: 'o'
+  }
+});
+
 const defaultConfig = {
-  entry: 'src',
+  entry: argv.entry || 'src',
   output: {
-    path: './',
+    path: argv.output || './',
     filename: 'build',
   },
   build: {
@@ -18,21 +28,29 @@ const defaultConfig = {
   babel: {}
 };
 
-const getConfig = () => new Promise(resolve => {
-  fs.readFile('config.json', (err, file) => {
+const getConfigFile = () => new Promise(resolve => {
+  const configPath = path.resolve(__dirname, argv.config || '.ticbundle.json');
+  fs.readFile(configPath, (err, file) => {
     if (err || !file) {
+      if (argv.config) {
+        console.error('\x1b[31m', `[tic-bundle] ${err.message || `No file found: ${configPath}`}`, '\x1b[0m');
+      }
+      console.info(' [tic-bundle] Using default config');
       resolve(defaultConfig);
     } else {
-      resolve(deepmerge(defaultConfig, JSON.parse(file), {
-        arrayMerge: (a, b) => b
-      }));
+      console.info(` [tic-bundle] Using ${argv.config}`);
+      resolve(deepmerge(
+        defaultConfig,
+        JSON.parse(file),
+        { arrayMerge: (a, b) => b }
+      ));
     }
   });
 });
 
 const bundle = async () => {
-  const config = await getConfig();
-  const filePattern = `${path.resolve(config.entry)}/**/*.js`;
+  const config = await getConfigFile();
+  const filePattern = `${path.resolve(config.entry)}`;
   const ignored = config.build.ignore
     .reduce((acc, cur) => ([
       ...acc,
@@ -56,6 +74,9 @@ const bundle = async () => {
 
   chokidar
     .watch(filePattern, { ignored, ignoreInitial: true })
+    .on('ready', () => {
+      console.log('\x1b[32m', `[tic-bundle] watching ${filePattern}`, '\x1b[0m');
+    })
     .on('all', event => {
       if (event === 'add' || event === 'change') {
         const bundleStart = new Date();
@@ -82,7 +103,7 @@ const bundle = async () => {
 
         const bundleEnd = new Date();
 
-        console.log(`Generated build file (${bundleEnd.getTime() - bundleStart.getTime()}ms)`);
+        console.log(`[tic-bundle] generated build file (${bundleEnd.getTime() - bundleStart.getTime()}ms)`);
       }
     });
 };
