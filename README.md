@@ -28,6 +28,12 @@ yarn install tic-bundle --save-dev
 }
 ```
 
+### CLI arguments
+
+ - `-n / --name` Bundled file name.
+ - `-o / --output` Bundled file output path.
+ - `-c / --config` Path to config file.
+
 ## Configuration
 
 `tic-bundle` supports config files. By default, `tic-bundle` looks for a `.ticbundle.json` file in the current directory, but an alternative location can be specified using `-c <file>` or `--config <file>`. 

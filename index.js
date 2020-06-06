@@ -9,17 +9,17 @@ const Babel = require('@babel/standalone');
 
 const argv = minimist(process.argv.slice(2), {
   alias: {
-    entry: 'e',
     config: 'c',
-    output: 'o'
+    output: 'o',
+    name: 'n'
   }
 });
 
 const defaultConfig = {
-  entry: argv.entry || 'src',
+  entry: argv._ || 'src',
   output: {
     path: argv.output || './',
-    filename: 'build',
+    filename: argv.name || 'build',
   },
   build: {
     order: {},
