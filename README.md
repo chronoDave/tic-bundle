@@ -1,4 +1,4 @@
-![tic-bundle logo](https://i.imgur.com/HqfxnMH.png)
+![tic-bundle logo](https://i.imgur.com/YpexCm4.png)
 
 # tic-bundle
 
