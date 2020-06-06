@@ -50,7 +50,7 @@ const getConfigFile = () => new Promise(resolve => {
 
 const bundle = async () => {
   const config = await getConfigFile();
-  const filePattern = `${path.resolve(config.entry)}`;
+  const filePattern = `${path.resolve(config.entry)}/**/*.js`;
   const ignored = config.build.ignore
     .reduce((acc, cur) => ([
       ...acc,
