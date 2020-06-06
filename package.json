@@ -1,6 +1,6 @@
 {
   "name": "tic-bundle",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "Multi-file development in TIC-80",
   "main": "index.js",
   "keywords": [

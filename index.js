@@ -16,7 +16,7 @@ const argv = minimist(process.argv.slice(2), {
 });
 
 const defaultConfig = {
-  entry: argv._ || 'src',
+  entry: argv._[1] || 'src',
   output: {
     path: argv.output || './',
     filename: argv.name || 'build',
