@@ -2,64 +2,88 @@ const chokidar = require('chokidar');
 const fs = require('fs');
 const path = require('path');
 const glob = require('glob');
+const deepmerge = require('deepmerge');
 const Babel = require('@babel/standalone');
 
-const getConfig = () => new Promise(resolve => (
-  fs.readFile('config.json', (err, file) => {
-    const defaultConfig = {
-      src: 'src',
-      output: './',
-      ignore: ['ignore'],
-      babel: {},
-      name: 'build'
-    };
+const defaultConfig = {
+  entry: 'src',
+  output: {
+    path: './',
+    filename: 'build',
+  },
+  build: {
+    order: {},
+    ignore: ['ignore']
+  },
+  babel: {}
+};
 
+const getConfig = () => new Promise(resolve => {
+  fs.readFile('config.json', (err, file) => {
     if (err || !file) {
       resolve(defaultConfig);
     } else {
-      resolve({
-        ...defaultConfig,
-        ...JSON.parse(file)
-      });
+      resolve(deepmerge(defaultConfig, JSON.parse(file), {
+        arrayMerge: (a, b) => b
+      }));
     }
-  })
-));
+  });
+});
 
 const bundle = async () => {
   const config = await getConfig();
-  const srcFiles = path.resolve(config.src, '*.js');
+  const filePattern = path.resolve(config.entry, '*.js');
+  const ignored = config.build.ignore
+    .reduce((acc, cur) => ([
+      ...acc,
+      `**/${cur}`,
+      `**/${cur}.js`
+    ]), [`**/${config.output.filename}.js`]);
+
+  const getFileOrder = filePath => {
+    const fileName = filePath.split('/').pop().split('.').shift();
+    if (config.build.order && config.build.order[fileName]) {
+      return config.build.order[fileName];
+    }
+    return parseInt(fileName.split('_').shift(), 10);
+  };
+
+  const createBuildFile = files => files
+    .map(file => [getFileOrder(file), file])
+    .sort((a, b) => a[0] - b[0])
+    .map(([, file]) => fs.readFileSync(file, 'utf-8').trim())
+    .join('\n\n');
 
   chokidar
-    .watch(srcFiles, { ignored: new RegExp(config.ignore.join('|')) })
-    .on('all', () => {
-      console.log(`[${new Date().toISOString()}] Folder change detected`);
+    .watch(filePattern, { ignored, ignoreInitial: true })
+    .on('all', event => {
+      if (event === 'add' || event === 'change') {
+        const bundleStart = new Date();
 
-      const files = glob.sync(srcFiles);
-      const buildFile = files
-        .filter(file => config.ignore
-          .map(item => file.includes(item))
-          .filter(item => item)
-          .length === 0)
-        .map(file => ({
-          order: file.split('_').shift(),
-          body: fs.readFileSync(file, 'utf-8')
-        }))
-        .sort((a, b) => a.order - b.order)
-        .map(({ body }) => body.trim())
-        .join('\n\n');
+        const files = glob.sync(filePattern, {
+          ignore: ignored,
+          nosort: true
+        });
+        const buildFile = createBuildFile(files);
 
-      const { code } = Babel.transform(buildFile, {
-        presets: ['env'],
-        sourceType: 'script',
-        ...config.babel
-      });
+        const { code } = Babel.transform(buildFile, {
+          presets: ['env'],
+          sourceType: 'script',
+          parserOpts: {
+            strictMode: true
+          },
+          ...config.babel
+        });
 
-      fs.writeFileSync(
-        path.resolve(config.output, `${config.name}.js`),
-        `// script: js\n\n${code}`
-      );
+        fs.writeFileSync(
+          path.resolve(config.output.path, `${config.output.filename}.js`),
+          `// script: js\n\n${code}`
+        );
 
-      console.log(`[${new Date().toISOString()}] Build file generated`);
+        const bundleEnd = new Date();
+
+        console.log(`Generated build file (${bundleEnd.getTime() - bundleStart.getTime()}ms)`);
+      }
     });
 };
 

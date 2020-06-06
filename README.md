@@ -1,8 +1,8 @@
 # tic80-bundle
 
-![screenshot of tic80-bundle being used in a terminal](https://i.imgur.com/UVHUMTK.jpg)
+![screenshot of tic80-bundle being used in a terminal](https://i.imgur.com/MrNWGGI.png)
 
-Simple file bundler for JavaScript development in TIC-80.
+Simple file bundler for JavaScript development in [TIC-80](https://tic.computer/).
 
 `tic80-bundle` comes with [Babel](https://babeljs.io/docs/en/babel-preset-env) pre-installed. Please note that polyfills are not supported.
 
@@ -16,37 +16,34 @@ yarn
 npm install
 ```
 
-## Configuration
-
-`tic80-bundle` accepts the following configuration options in `config.json`:
-
-- `src` Folder to watch. Defaults to `src`.
-- `output` Output folder. Defaults to `./`.
-- `ignore` File(s) to ignore. Defaults to `["ignore"]`.
-- `name` Name of build file. Defaults to `build`
-- `babel` Babel options, see [Babel - Options](https://babeljs.io/docs/en/options) for more information. Defaults to `{}`
-
-If no `config.json` is found, `tic80-bundle` will use the default values.
-
 ## Usage
 
-1) Create `config.json` (optional)
-2) Write JavaScript code in `src` folder
-3) Run `yarn start`
+```
+yarn start
+```
 
-The order in which `tic80-bundle` places the files is determined by a `<number>_` prefix (e.g. `1_index.js`).
+## Configuration
 
-<b>Example:</b>
+Configuration is optional, `tic80-bundle` will watch `src` by default and output `build.js` in the current directory. `ignore` directory and files containing `ignore` are ignored by default.
 
-`config.json`
+`config.json`:
 
 ```
 {
-  "src": "src",
-  "output": "./",
-  "name": "build"
+  entry: 'src', // Folder to watch for change
+  output: {
+    path: './', // Output path
+    filename: 'build' // Build file name
+  },
+  build: {
+    order: {} // Build order { <number>: <filename> }, e.g. { 3: 'main' },
+    ignore: ['ignore'] // Array of file / folders to ignore
+  },
+  babel: {} // Babel options
 }
 ```
+
+<b>Example:</b>
 
 `src/2_main.js`
 
@@ -56,7 +53,7 @@ const TIC = () => {
 };
 ```
 
-`src/2_ignore.js`
+`src/3_ignore.js`
 
 ```
 // This is ignored
