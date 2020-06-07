@@ -29,7 +29,7 @@ const defaultConfig = {
 };
 
 const getConfigFile = () => new Promise(resolve => {
-  const configPath = path.resolve(__dirname, argv.config || '.ticbundle.json');
+  const configPath = path.resolve(process.cwd(), argv.config || '.ticbundle.json');
   fs.readFile(configPath, (err, file) => {
     if (err || !file) {
       if (argv.config) {
@@ -38,7 +38,7 @@ const getConfigFile = () => new Promise(resolve => {
       console.info(' [tic-bundle] Using default config');
       resolve(defaultConfig);
     } else {
-      console.info(` [tic-bundle] Using ${argv.config}`);
+      console.info(` [tic-bundle] Using ${argv.config || '.ticbundle.json'}`);
       resolve(deepmerge(
         defaultConfig,
         JSON.parse(file),
