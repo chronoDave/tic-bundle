@@ -1,6 +1,6 @@
 {
   "name": "tic-bundle",
-  "version": "2.0.4",
+  "version": "2.0.5",
   "description": "Multi-file development in TIC-80",
   "main": "index.js",
   "keywords": [
@@ -14,6 +14,11 @@
   "author": "Chronocide",
   "license": "GPLv3",
   "bin": "./index.js",
+  "scripts": {
+    "bump:patch": "yarn version --patch && yarn publish",
+    "bump:minor": "yarn version --patch && yarn publish",
+    "bump:major": "yarn version --patch && yarn publish"
+  },
   "dependencies": {
     "@babel/standalone": "^7.9.6",
     "babel-preset-env": "^1.7.0",
