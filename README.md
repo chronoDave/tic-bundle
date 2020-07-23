@@ -1,5 +1,8 @@
 ![tic-bundle logo](https://i.imgur.com/YpexCm4.png)
 
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+[![NPM](https://img.shields.io/npm/v/tic-bundle?label=npm)](https://www.npmjs.com/package/tic-bundle)
+
 # tic-bundle
 
 Simple CLI tool for bundling JavaScript code for [TIC-80](https://tic.computer/).
