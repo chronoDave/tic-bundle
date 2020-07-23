@@ -1,6 +1,6 @@
 {
   "name": "tic-bundle",
-  "version": "2.0.5",
+  "version": "2.0.6",
   "description": "Multi-file development in TIC-80",
   "main": "index.js",
   "keywords": [
@@ -15,9 +15,9 @@
   "license": "GPLv3",
   "bin": "./index.js",
   "scripts": {
-    "bump:patch": "yarn version --patch && yarn publish",
-    "bump:minor": "yarn version --patch && yarn publish",
-    "bump:major": "yarn version --patch && yarn publish"
+    "bump:patch": "yarn version --patch && git push --tags && yarn publish",
+    "bump:minor": "yarn version --patch && git push --tags && yarn publish",
+    "bump:major": "yarn version --patch && git push --tags && yarn publish"
   },
   "dependencies": {
     "@babel/standalone": "^7.9.6",
