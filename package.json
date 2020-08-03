@@ -17,8 +17,8 @@
   "scripts": {
     "test": "tape src/index.test.js",
     "bump:patch": "yarn version --patch && git push --tags && yarn publish",
-    "bump:minor": "yarn version --patch && git push --tags && yarn publish",
-    "bump:major": "yarn version --patch && git push --tags && yarn publish"
+    "bump:minor": "yarn version --minor && git push --tags && yarn publish",
+    "bump:major": "yarn version --major && git push --tags && yarn publish"
   },
   "dependencies": {
     "@babel/standalone": "^7.9.6",
