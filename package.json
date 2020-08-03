@@ -2,7 +2,7 @@
   "name": "tic-bundle",
   "version": "2.0.8",
   "description": "Multi-file development in TIC-80",
-  "main": "index.js",
+  "main": "src/index.js",
   "keywords": [
     "tic80",
     "tic-80",
@@ -15,6 +15,7 @@
   "license": "GPLv3",
   "bin": "./index.js",
   "scripts": {
+    "test": "tape src/index.test.js",
     "bump:patch": "yarn version --patch && git push --tags && yarn publish",
     "bump:minor": "yarn version --patch && git push --tags && yarn publish",
     "bump:major": "yarn version --patch && git push --tags && yarn publish"
@@ -24,11 +25,13 @@
     "babel-preset-env": "^1.7.0",
     "chokidar": "^3.4.0",
     "deepmerge": "^4.2.2",
-    "glob": "^7.1.6",
+    "fast-glob": "^3.2.4",
     "minimist": "^1.2.5"
   },
   "devDependencies": {
     "eslint": "^7.0.0",
-    "eslint-config-airbnb-base": "^14.1.0"
+    "eslint-config-airbnb-base": "^14.1.0",
+    "eslint-plugin-import": "^2.22.0",
+    "tape": "^5.0.1"
   }
 }

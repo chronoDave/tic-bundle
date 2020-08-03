@@ -26,13 +26,14 @@ yarn install tic-bundle --save-dev
 ```
 {
   "scripts": {
-    "watch": tic-bundle src
+    "watch": tic-bundle
   }
 }
 ```
 
 ### CLI arguments
 
+ - `-e / --entry` Folder to watch.
  - `-n / --name` Bundled file name.
  - `-o / --output` Bundled file output path.
  - `-c / --config` Path to config file.
@@ -54,11 +55,11 @@ The specificity is as folows:
   entry: 'src',
   output: {
     path: './',
-    filename: 'build',
+    name: 'build',
   },
   build: {
     order: {},
-    ignore: ['ignore']
+    ignore: ['**/ignore.*.js']
   },
   babel: {}
 }
@@ -68,9 +69,9 @@ The specificity is as folows:
 
  - `entry` (default `src`) - Folder to watch.
  - `output.path` (default `./`) - Bundled file output path.
- - `output.filename` (default `build`) - Bundled file name.
+ - `output.name` (default `build`) - Bundled file name.
  - `build.order` (default `{}`) - Order to bundle files in. This is an object containing filename and index. For example `{ build: 3 }` would put `build.js` on the 3rd position. If the file is not found in `build.order`, `tic-bundle` sorts on filename, but `_` can be used as a delimiter. For example `2_index.js` would put `index.js` on the 2nd position.
- - `build.ignore` (default `['ignore']`) - Files & folders to ignore. Every value gets globbed into `**/<value>` and `**/<value>.js`. The output file is ignored by default.
+ - `build.ignore` (default `['**/ignore.*.js']`) - Array of globs to ignore.
  - `babel` (default `{}`) - [Babel options](https://babeljs.io/docs/en/options). 
 
 ## Example
