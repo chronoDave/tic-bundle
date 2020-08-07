@@ -77,6 +77,13 @@ test('createBundle()', async t => {
   }
 
   try {
+    await createBundle(testPath, { babel: null });
+    t.pass('resolves if babel is null');
+  } catch (err) {
+    t.fail(err.message);
+  }
+
+  try {
     const code = await createBundle(testPath, { fileOrder: { 'file.b': 1 } });
     code.split('\n').forEach((entry, i) => {
       t.equal(entry, testFiles[i].content, 'should be in correct order');

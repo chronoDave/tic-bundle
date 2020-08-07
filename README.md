@@ -72,7 +72,7 @@ The specificity is as folows:
  - `output.name` (default `build`) - Bundled file name.
  - `build.order` (default `{}`) - Order to bundle files in. This is an object containing filename and index. For example `{ build: 3 }` would put `build.js` on the 3rd position. If the file is not found in `build.order`, `tic-bundle` sorts on filename, but `_` can be used as a delimiter. For example `2_index.js` would put `index.js` on the 2nd position.
  - `build.ignore` (default `['**/ignore.*.js']`) - Array of globs to ignore.
- - `babel` (default `{}`) - [Babel options](https://babeljs.io/docs/en/options). 
+ - `babel` (default `{}`) - [Babel options](https://babeljs.io/docs/en/options), can be disabled if set to `null`. 
 
 ## Example
 

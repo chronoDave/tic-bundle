@@ -65,14 +65,19 @@ const createBundle = async (entry, {
       .sort((a, b) => a.index - b.index)
       .map(({ file }) => fs.readFileSync(file, { encoding: 'utf-8' }).trim())
       .join('\n\n');
-    const { code } = Babel.transform(buildFile, {
-      presets: ['env'],
-      sourceType: 'script',
-      parserOpts: { strictMode: true },
-      ...babel
-    });
 
-    return Promise.resolve(code);
+    if (babel) {
+      const { code } = Babel.transform(buildFile, {
+        presets: ['env'],
+        sourceType: 'script',
+        parserOpts: { strictMode: true },
+        ...babel
+      });
+
+      return Promise.resolve(code);
+    }
+
+    return Promise.resolve(buildFile);
   } catch (err) {
     return Promise.reject(err);
   }
