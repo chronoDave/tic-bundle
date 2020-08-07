@@ -8,7 +8,8 @@ const {
   createBundle
 } = require('./index');
 
-const configFile = path.resolve(__dirname, 'test.json');
+const configJson = path.resolve(__dirname, 'test.json');
+const configJs = path.resolve(__dirname, 'test.js');
 const testPath = path.resolve(__dirname, 'files');
 const testFiles = [
   { name: '0_file.js', content: '// 0_file.js' },
@@ -31,11 +32,15 @@ const deleteTestFolder = () => {
 test('createConfig()', async t => {
   t.true(typeof createConfig() === 'object', 'should return default config if no file is found');
 
-  fs.writeFileSync(configFile, JSON.stringify({ build: { order: { test: 1 } } }));
+  // JSON
+  fs.writeFileSync(configJson, JSON.stringify({ build: { order: { test: 1 } } }));
+  t.equal(createConfig(configJson).build.order.test, 1, 'should use config json');
+  fs.unlinkSync(configJson);
 
-  t.equal(createConfig(configFile).build.order.test, 1, 'should use config file');
-
-  fs.unlinkSync(configFile);
+  // JS
+  fs.writeFileSync(configJs, 'module.exports = { build: { order: { test: (() => 1)() } } };');
+  t.equal(createConfig(configJs).build.order.test, 1, 'should use config js');
+  fs.unlinkSync(configJs);
 
   t.end();
 });

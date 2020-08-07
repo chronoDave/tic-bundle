@@ -22,17 +22,30 @@ const createConfig = file => {
   };
 
   try {
-    const configFile = JSON
-      .parse(fs.readFileSync(path.resolve(process.cwd(), file)));
-    console.log('\x1b[36m%s\x1b[0m', `[tic-bundle] Using ${file}`);
+    const configFile = path.resolve(process.cwd(), file);
+    const fileType = configFile.split('.').pop();
+
+    let config = null;
+    switch (fileType) {
+      case 'js':
+        config = require(configFile);
+        break;
+      case 'json':
+        config = JSON.parse(fs.readFileSync(configFile));
+        break;
+      default:
+        throw new Error(`Invalid file type: ${fileType}`);
+    }
+
+    console.log(`[tic-bundle] Using ${file}`);
     return deepmerge(
       defaults,
-      configFile,
+      config,
       { arrayMerge: (a, b) => b }
     );
   } catch (err) {
     console.log('\x1b[31m%s\x1b[0m', `[tic-bundle] ${err.message || `No file found: ${file}`}`);
-    console.log('\x1b[36m%s\x1b[0m', '[tic-bundle] Using default config');
+    console.log('[tic-bundle] Using default config');
     return defaults;
   }
 };

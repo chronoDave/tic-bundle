@@ -18,7 +18,11 @@ const args = minimist(process.argv.slice(2), {
     name: 'n'
   }
 });
-const config = createConfig(args.config || '.ticbundle.json');
+const config = createConfig(
+  args.config ||
+  '.ticbundle.js' ||
+  '.ticbundle.json'
+);
 const glob = `${args.entry || config.entry}/**/*.js`;
 
 const run = async () => {
