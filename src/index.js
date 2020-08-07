@@ -18,7 +18,7 @@ const createConfig = file => {
       order: {},
       ignore: ['**/ignore.*.js']
     },
-    babel: {}
+    babel: null
   };
 
   try {
@@ -54,7 +54,7 @@ const getFileIndex = (file, list = {}) => {
 const createBundle = async (entry, {
   ignore = [],
   fileOrder = {},
-  babel = {}
+  babel = null
 } = {}) => {
   try {
     if (!entry) throw new Error(`Invalid entry: ${entry}`);
@@ -67,12 +67,7 @@ const createBundle = async (entry, {
       .join('\n\n');
 
     if (babel) {
-      const { code } = Babel.transform(buildFile, {
-        presets: ['env'],
-        sourceType: 'script',
-        parserOpts: { strictMode: true },
-        ...babel
-      });
+      const { code } = Babel.transform(buildFile, babel);
 
       return Promise.resolve(code);
     }

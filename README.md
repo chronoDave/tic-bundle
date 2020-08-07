@@ -7,7 +7,7 @@
 
 Simple CLI tool for bundling JavaScript code for [TIC-80](https://tic.computer/).
 
-`tic-bundle` comes with [Babel](https://babeljs.io/docs/en/babel-preset-env) pre-installed. Please note that polyfills are not supported.
+By default, `tic-bundle` simply bundels your files together, but [Babel](https://babeljs.io/docs/en/babel-standalone), can be used to transpile / transform your code even further.  
 
 ## Installation
 
@@ -61,7 +61,7 @@ The specificity is as folows:
     order: {},
     ignore: ['**/ignore.*.js']
   },
-  babel: {}
+  babel: null
 }
 ```
 
@@ -72,7 +72,7 @@ The specificity is as folows:
  - `output.name` (default `build`) - Bundled file name.
  - `build.order` (default `{}`) - Order to bundle files in. This is an object containing filename and index. For example `{ build: 3 }` would put `build.js` on the 3rd position. If the file is not found in `build.order`, `tic-bundle` sorts on filename, but `_` can be used as a delimiter. For example `2_index.js` would put `index.js` on the 2nd position.
  - `build.ignore` (default `['**/ignore.*.js']`) - Array of globs to ignore.
- - `babel` (default `{}`) - [Babel options](https://babeljs.io/docs/en/options), can be disabled if set to `null`. 
+ - `babel` (default `null`) - [Babel options](https://babeljs.io/docs/en/options).
 
 ## Example
 
@@ -87,7 +87,7 @@ function ui() {
 `src/1_main.js`
 
 ```
-const TIC = () => {
+function TIC() {
 
 };
 ```
@@ -105,7 +105,7 @@ const TIC = () => {
 ```
 // script: js
 
-var TIC = function TIC() {
+function TIC() {
 
 };
 

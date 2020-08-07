@@ -85,7 +85,7 @@ test('createBundle()', async t => {
 
   try {
     const code = await createBundle(testPath, { fileOrder: { 'file.b': 1 } });
-    code.split('\n').forEach((entry, i) => {
+    code.split('\n\n').forEach((entry, i) => {
       t.equal(entry, testFiles[i].content, 'should be in correct order');
     });
   } catch (err) {
