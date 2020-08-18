@@ -39,7 +39,10 @@ const run = async () => {
         args.output || config.output.path,
         `${args.name || config.output.name}.js`
       ),
-      `// script: js\n\n${bundle}`
+      [
+        ...config.metadata,
+        bundle
+      ].join('\n\n')
     );
 
     console.log(`[tic-bundle] generated build file (${Math.round(performance.now() - ts)}ms)`);

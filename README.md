@@ -106,6 +106,7 @@ The specificity is as folows:
 ```JSON
 {
   "entry": "src",
+  "metadata": ["// script: js"],
   "output": {
     "path": "./",
     "name": "build",
@@ -121,6 +122,7 @@ The specificity is as folows:
 ### Options
 
  - `entry` (default `src`) - Folder to watch.
+ - `metadata` (default `// script: js`) - TIC-80 metadata header.
  - `output.path` (default `./`) - Bundled file output path.
  - `output.name` (default `build`) - Bundled file name.
  - `build.order` (default `{}`) - Order to bundle files in. This is an object containing filename and index. For example `{ build: 3 }` would put `build.js` on the 3rd position. If the file is not found in `build.order`, `tic-bundle` sorts on filename, but `_` can be used as a delimiter. For example `2_index.js` would put `index.js` on the 2nd position.

@@ -33,12 +33,25 @@ test('createConfig()', async t => {
   t.true(typeof createConfig() === 'object', 'should return default config if no file is found');
 
   // JSON
-  fs.writeFileSync(configJson, JSON.stringify({ build: { order: { test: 1 } } }));
+  fs.writeFileSync(configJson, JSON.stringify({
+    metadata: [
+      '// saveid: test',
+      '// script: js'
+    ],
+    build: { order: { test: 1 } }
+  }));
   t.equal(createConfig(configJson).build.order.test, 1, 'should use config json');
   fs.unlinkSync(configJson);
 
   // JS
-  fs.writeFileSync(configJs, 'module.exports = { build: { order: { test: (() => 1)() } } };');
+  fs.writeFileSync(configJs, `
+    module.exports = {
+      metadata: [
+        '// saveid: test',
+        '// script: js'
+      ],
+      build: { order: { test: (() => 1)() } }
+    };`);
   t.equal(createConfig(configJs).build.order.test, 1, 'should use config js');
   fs.unlinkSync(configJs);
 

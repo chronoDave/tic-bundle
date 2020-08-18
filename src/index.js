@@ -10,6 +10,7 @@ const fs = require('fs');
 const createConfig = file => {
   const defaults = {
     entry: 'src',
+    metadata: ['// script: js'],
     output: {
       path: './',
       name: 'build'
