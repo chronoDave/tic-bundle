@@ -2,7 +2,6 @@
 
 [![license GPLv3](https://img.shields.io/badge/license-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 [![npm](https://img.shields.io/npm/v/tic-bundle?label=npm)](https://www.npmjs.com/package/tic-bundle)
-[![minzip size](https://img.shields.io/bundlephobia/minzip/tic-bundle.svg)](https://bundlephobia.com/result?p=tic-bundle@2.4.3)
 
 # tic-bundle
 
