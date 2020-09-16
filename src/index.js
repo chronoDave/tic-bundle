@@ -1,5 +1,4 @@
 const glob = require('fast-glob');
-const Babel = require('@babel/standalone');
 const deepmerge = require('deepmerge');
 const path = require('path');
 const fs = require('fs');
@@ -81,6 +80,7 @@ const createBundle = async (entry, {
       .join('\n\n');
 
     if (babel) {
+      const Babel = require('@babel/standalone');
       const { code } = Babel.transform(buildFile, babel);
 
       return Promise.resolve(code);

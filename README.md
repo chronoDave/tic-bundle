@@ -1,13 +1,14 @@
 ![tic-bundle logo](https://i.imgur.com/YpexCm4.png)
 
-[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
-[![NPM](https://img.shields.io/npm/v/tic-bundle?label=npm)](https://www.npmjs.com/package/tic-bundle)
+[![license GPLv3](https://img.shields.io/badge/license-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+[![npm](https://img.shields.io/npm/v/tic-bundle?label=npm)](https://www.npmjs.com/package/tic-bundle)
+[![minzip size](https://img.shields.io/bundlephobia/minzip/tic-bundle.svg)](https://bundlephobia.com/result?p=tic-bundle)
 
 # tic-bundle
 
-Simple CLI tool for bundling JavaScript code for [TIC-80](https://tic.computer/).
+Simple CLI tool for bundling JavaScript code for [TIC-80](https://tic.computer/). Initially written for JavaScript, but now supports any language!
 
-By default, `tic-bundle` simply bundels your files together, but [Babel](https://babeljs.io/docs/en/), can be used to transpile / transform your code even further. 
+By default, `tic-bundle` simply bundels your files together, but [Babel](https://babeljs.io/docs/en/), can be used to transpile / transform your JavaScript code.
 
  - [Installation](#installation)
  - [Example](#example)
@@ -15,7 +16,7 @@ By default, `tic-bundle` simply bundels your files together, but [Babel](https:/
  - [Configuration](#configuration)
    - [Options](#options)
    - [Babel](#babel)
- - [License](#license)
+ - [License](./LICENSE)
  - [Donating](#donating)
 
 
@@ -23,10 +24,16 @@ By default, `tic-bundle` simply bundels your files together, but [Babel](https:/
 
 ```
 // Yarn
-yarn add tic-bundle --dev
+yarn add tic-bundle --dev --prod
+
+// Yarn (without Babel)
+yarn add tic-bundle --dev --prod --ignore-optional
 
 // Npm
-yarn install tic-bundle --save-dev
+npm install tic-bundle --save-dev
+
+// Npm (without Babel)
+npm install tic-bundle --save-dev --no-optional --only=prod
 ```
 
 ## Example
@@ -153,11 +160,6 @@ module.exports = {
 };
 
 ```
-
-## License
-
-GNU General Public License v3.0, see [LICENSE](./LICENSE) file.
-
 
 ## Donating
 
