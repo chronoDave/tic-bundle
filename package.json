@@ -15,10 +15,7 @@
   "repository": "https://github.com/chronoDave/tic-bundle.git",
   "license": "GPL-3.0",
   "scripts": {
-    "test": "tape src/index.test.js",
-    "bump:patch": "yarn version --patch && git push -u origin master --tags && yarn publish",
-    "bump:minor": "yarn version --minor && git push -u origin master --tags && yarn publish",
-    "bump:major": "yarn version --major && git push -u origin master --tags && yarn publish"
+    "test": "tape src/index.test.js"
   },
   "dependencies": {
     "chokidar": "^3.4.0",
