@@ -3,24 +3,26 @@
   "description": "Multi-file development in TIC-80",
   "author": "Chronocide",
   "version": "2.4.3",
-  "bin": "./index.js",
-  "main": "src/index.js",
+  "bin": "bin.js",
+  "main": "bin.js",
   "keywords": [
     "tic80",
     "tic-80",
     "fantasy-console",
-    "javascript",
-    "babel"
+    "javascript"
+  ],
+  "files": [
+    "src/**/*.js",
+    "bin.js"
   ],
   "repository": "https://github.com/chronoDave/tic-bundle.git",
   "license": "GPL-3.0",
   "scripts": {
-    "test": "tape src/index.test.js"
+    "test": "tape test/*.test.js"
   },
   "dependencies": {
     "chokidar": "^3.4.0",
-    "deepmerge": "^4.2.2",
-    "fast-glob": "^3.2.4",
+    "lodash.get": "^4.4.2",
     "minimist": "^1.2.5"
   },
   "devDependencies": {
@@ -28,8 +30,5 @@
     "eslint-config-airbnb-base": "^14.1.0",
     "eslint-plugin-import": "^2.22.0",
     "tape": "^5.0.1"
-  },
-  "optionalDependencies": {
-    "@babel/standalone": "^7.9.6"
   }
 }

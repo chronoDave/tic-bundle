@@ -6,13 +6,17 @@
 
 # tic-bundle
 
-Simple CLI tool for bundling JavaScript code for [TIC-80](https://tic.computer/). Initially written for JavaScript, but now supports any language!
+Simple CLI tool for bundling [TIC-80](https://tic.computer/) cartridge code. Currently supporting:
+ - [JavaScript (ES5)](https://www.w3schools.com/js/js_es5.asp)
+ - [Moonscript](https://github.com/leafo/moonscript)
+ - [Fennel](https://fennel-lang.org/)
+ - [Wren](https://wren.io/)
 
-By default, `tic-bundle` simply bundels your files together, but [Babel](https://babeljs.io/docs/en/), can be used to transpile / transform your JavaScript code.
+## Content
 
  - [Installation](#installation)
  - [Example](#example)
- - [Usage](#usage)
+ - [CLI](#cli)
  - [Configuration](#configuration)
    - [Options](#options)
    - [Babel](#babel)
@@ -24,31 +28,25 @@ By default, `tic-bundle` simply bundels your files together, but [Babel](https:/
 
 ```
 // Yarn
-yarn add tic-bundle --dev --prod
-
-// Yarn (without Babel)
-yarn add tic-bundle --dev --prod --ignore-optional
+yarn add tic-bundle --dev
 
 // Npm
-npm install tic-bundle --save-dev
-
-// Npm (without Babel)
-npm install tic-bundle --save-dev --no-optional --only=prod
+npm i tic-bundle --save-dev
 ```
 
 ## Example
 
+<b>Config</b>
+
+```JS
+{
+  files: ['ui.js', 'main.js']
+}
+```
+
 <b>Input</b>
 
-`src/3_ui.js`
-
-```
-function ui() {
-  return 'ui';
-};
-```
-
-`src/1_main.js`
+`src/main.js`
 
 ```
 function TIC() {
@@ -56,10 +54,12 @@ function TIC() {
 };
 ```
 
-`src/2_ignore.js`
+`src/ui.js`
 
 ```
-// This is ignored
+function ui() {
+  return 'ui';
+};
 ```
 
 <b>Output</b>
@@ -69,16 +69,16 @@ function TIC() {
 ```
 // script: js
 
-function TIC() {
-
-};
-
 function ui() {
   return 'ui';
 };
+
+function TIC() {
+
+};
 ```
 
-## Usage
+## CLI
 
 `package.json`
 
@@ -92,10 +92,12 @@ function ui() {
 
 <b>CLI options</b>
 
- - `-e / --entry` Folder to watch.
- - `-n / --name` Bundled file name.
- - `-o / --output` Bundled file output path.
- - `-c / --config` Path to config file.
+ - `-r / --root` - Root folder
+ - `-c / --config` - Path to config file
+ - `-o / --output` - Bundled file output path
+ - `-n / --name` - Bundle file name
+ - `-s / --script` - Language
+
 
 ## Configuration
 
@@ -103,59 +105,69 @@ function ui() {
 
 The specificity is as folows:
 
- - CLI argument
+ - CLI
  - `.ticbundle.js`
  - `.ticbundle.json`
- - Default values
+ - Default config
 
 <b>Default config</b>
 
-```JSON
+```JS
 {
-  "entry": "src",
-  "metadata": ["// script: js"],
-  "output": {
-    "path": "./",
-    "name": "build",
+  root: 'src',
+  metadata: {
+    title: null,
+    author: null,
+    desc: null,
+    script: 'js',
+    input: null,
+    saveid: null
   },
-  "build": {
-    "order": {},
-    "ignore": ["**/ignore.*.js"]
+  output: {
+    path: './',
+    extension: 'js',
+    name: 'build'
   },
-  "babel": null
+  files: [],
+  after: bundle => bundle  
 }
 ```
 
 ### Options
 
- - `entry` (default `src`) - Folder to watch.
- - `metadata` (default `// script: js`) - TIC-80 metadata header.
+ - `root` (default `src`) - Folder to watch.
+ - `metadata` - [Cartridge metadata](https://github.com/nesbox/TIC-80/wiki#cartridge-metadata)
+ - `metadata.title` - The name of the cart.
+ - `metadata.author` - The name of the developer.
+ - `metadata.description` - Optional description of the game.
+ - `metadata.script` (default `js`) - Used scripting language.
+ - `metadata.input` - Selects gamepad, mouse or keyboard input source.
+ - `metadata.saveid` - Allows save data to be shared within multiple games on a copy of TIC.
  - `output.path` (default `./`) - Bundled file output path.
  - `output.name` (default `build`) - Bundled file name.
- - `build.order` (default `{}`) - Order to bundle files in. This is an object containing filename and index. For example `{ build: 3 }` would put `build.js` on the 3rd position. If the file is not found in `build.order`, `tic-bundle` sorts on filename, but `_` can be used as a delimiter. For example `2_index.js` would put `index.js` on the 2nd position.
- - `build.ignore` (default `['**/ignore.*.js']`) - Array of globs to ignore.
- - `babel` (default `null`) - [Babel options](https://babeljs.io/docs/en/options).
+ - `files` - Files to bundle. Files will be ordered by index (top first, bottom last).
+ - `after` - Run after generating the bundle, this can be used to further modify the bundle.
 
 ### Babel
 
-`tic-bundle` supports [Babel](https://babeljs.io/docs/en/), which can be used to transpile / transform your code. For example, Babel can be used to remove comments from your code or [transform arrow functions](https://babeljs.io/docs/en/babel-plugin-transform-arrow-functions).
-
-Babel plugins require a `.js` config file.
+`after` can be used to transform the bundled code. A common use-case for `js` code is transforming `ES6` syntax to `ES5`.
 
 <b>Example</b>
 
 `.ticbundle.js`
 
 ```JS
+const { transformSync } = require('@babel/standalone');
 const pluginTransformArrowFunctions = require('@babel/plugin-transform-arrow-functions');
 
 module.exports = {
-  babel: {
-    sourceType: 'script',
-    plugins: [
-      pluginTransformArrowFunctions
-    ],
-    comments: false
+  after: bundle => {
+    const { code } = transformSync(bundle, {
+      sourceType: 'script',
+      plugins: [pluginTransformArrowFunctions]
+    });
+
+    return code;
   }
 };
 
