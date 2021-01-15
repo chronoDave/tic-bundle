@@ -10,7 +10,7 @@ test('[run] creates valid bundle file', t => {
   const type = 'js';
 
   const config = createConfig({
-    files: ['createConfig', 'run'],
+    files: ['createConfig.js', 'run.js'],
     output: { path: __dirname, name }
   });
   const file = path.resolve(__dirname, `${name}.${type}`);
@@ -34,7 +34,7 @@ test('[run] accepts metadata', t => {
   const author = 'test';
 
   const config = createConfig({
-    files: ['createConfig', 'run'],
+    files: ['createConfig.js', 'run.js'],
     metadata: { author },
     output: { path: __dirname, name }
   });
@@ -56,7 +56,7 @@ test('[run] transforms output if `after` is provided', t => {
   const type = 'js';
 
   const config = createConfig({
-    files: ['createConfig', 'run'],
+    files: ['createConfig.js', 'run.js'],
     output: { path: __dirname, name },
     after: () => ''
   });

@@ -36,7 +36,7 @@ module.exports = (args, config) => {
   fs.writeFileSync(
     path.resolve(
       args.output || config.output.path,
-      `${args.name || config.output.name}.${config.output.extension}`
+      `${args.name || config.output.name}.${args.file || config.output.extension}`
     ),
     [
       Object
@@ -44,7 +44,9 @@ module.exports = (args, config) => {
         .filter(([, value]) => value)
         .map(([key, value]) => `// ${key}: ${value}`)
         .join('\n'),
-      config.after(bundle)
+      config.after ?
+        config.after(bundle) :
+        bundle
     ].join('\n\n')
   );
 };

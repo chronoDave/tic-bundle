@@ -6,11 +6,7 @@
 
 # tic-bundle
 
-Simple CLI tool for bundling [TIC-80](https://tic.computer/) cartridge code. Currently supporting:
- - [JavaScript (ES5)](https://www.w3schools.com/js/js_es5.asp)
- - [Moonscript](https://github.com/leafo/moonscript)
- - [Fennel](https://fennel-lang.org/)
- - [Wren](https://wren.io/)
+Simple CLI tool for bundling [TIC-80](https://tic.computer/) cartridge code. Supports any language!
 
 ## Content
 
@@ -96,6 +92,7 @@ function TIC() {
  - `-c / --config` - Path to config file
  - `-o / --output` - Bundled file output path
  - `-n / --name` - Bundle file name
+ - `-f / --file` - Bundle file extension
  - `-s / --script` - Language
 
 
@@ -129,7 +126,7 @@ The specificity is as folows:
     name: 'build'
   },
   files: [],
-  after: bundle => bundle  
+  after: null
 }
 ```
 
@@ -144,30 +141,27 @@ The specificity is as folows:
  - `metadata.input` - Selects gamepad, mouse or keyboard input source.
  - `metadata.saveid` - Allows save data to be shared within multiple games on a copy of TIC.
  - `output.path` (default `./`) - Bundled file output path.
+ - `output.extension` (default `js`) - Bundle file output extension
  - `output.name` (default `build`) - Bundled file name.
  - `files` - Files to bundle. Files will be ordered by index (top first, bottom last).
  - `after` - Run after generating the bundle, this can be used to further modify the bundle.
 
 ### Babel
 
-`after` can be used to transform the bundled code. A common use-case for `js` code is transforming `ES6` syntax to `ES5`.
+`after` can be used to transform the bundled code. A common use-case for `js` is transforming `ES6` syntax to `ES5`.
 
 <b>Example</b>
 
 `.ticbundle.js`
 
 ```JS
-const { transformSync } = require('@babel/standalone');
-const pluginTransformArrowFunctions = require('@babel/plugin-transform-arrow-functions');
-
 module.exports = {
   after: bundle => {
-    const { code } = transformSync(bundle, {
-      sourceType: 'script',
-      plugins: [pluginTransformArrowFunctions]
+    const { code } = require('@babel/standalone').transform(bundle, {
+      plugins: [require('@babel/plugin-transform-arrow-functions')]
     });
-
-    return code;
+    
+    return  code;
   }
 };
 

@@ -25,13 +25,6 @@ module.exports = config => {
   };
 
   try {
-    const extensions = {
-      js: 'js',
-      moon: 'moon',
-      fennel: 'fnl',
-      wren: 'wren'
-    };
-
     const normalizeString = key => {
       const value = objectGet(config, key);
       if (typeof value !== 'string') return objectGet(defaultConfig, key);
@@ -62,8 +55,8 @@ module.exports = config => {
         saveid: normalizeString('metadata.saveid')
       },
       output: {
-        extension: extensions[normalizeString('metadata.script')],
         path: normalizeString('output.path'),
+        extension: normalizeString('output.extension'),
         name: normalizeString('output.name')
       },
       files: normalizeArray('files', value => typeof value !== 'string'),

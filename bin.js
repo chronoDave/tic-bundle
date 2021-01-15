@@ -13,7 +13,8 @@ const args = minimist(process.argv.slice(2), {
     config: 'c',
     output: 'o',
     name: 'n',
-    script: 's'
+    script: 's',
+    file: 'f'
   }
 });
 

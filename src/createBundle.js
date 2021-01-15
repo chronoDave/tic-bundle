@@ -5,13 +5,12 @@ const fs = require('fs');
  * Create bundled file
  * @param {string} root
  * @param {string[]} files
- * @param {string} extension
  */
-module.exports = (root, files, extension) => files
+module.exports = (root, files) => files
   .map(file => {
     try {
       const fileData = fs.readFileSync(
-        path.resolve(root, `${file}.${extension}`),
+        path.resolve(root, file),
         { encoding: 'utf-8' }
       );
 
