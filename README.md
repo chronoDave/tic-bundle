@@ -2,7 +2,7 @@
 
 [![license GPLv3](https://img.shields.io/badge/license-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 [![npm](https://img.shields.io/npm/v/tic-bundle?label=npm)](https://www.npmjs.com/package/tic-bundle)
-![Test](https://github.com/chronoDave/tic-bundle/workflows/Test/badge.svg?branch=master)
+![tic-bundle](https://github.com/chronoDave/tic-bundle/workflows/tic-bundle/badge.svg)
 
 # tic-bundle
 
