@@ -7,6 +7,7 @@ const objectGet = require('lodash.get');
 module.exports = config => {
   const defaultConfig = {
     root: 'src',
+    wait: 200,
     metadata: {
       title: null,
       author: null,
@@ -25,6 +26,12 @@ module.exports = config => {
   };
 
   try {
+    const normalizeNumber = key => {
+      const value = objectGet(config, key);
+      if (typeof value !== 'number') return objectGet(defaultConfig, key);
+      return value;
+    };
+
     const normalizeString = key => {
       const value = objectGet(config, key);
       if (typeof value !== 'string') return objectGet(defaultConfig, key);
@@ -45,6 +52,7 @@ module.exports = config => {
 
     return ({
       root: normalizeString('root'),
+      wait: normalizeNumber('wait'),
       ignore: normalizeArray('ignore', value => typeof value !== 'string'),
       metadata: {
         title: normalizeString('metadata.title'),

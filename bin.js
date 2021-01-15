@@ -15,7 +15,8 @@ const args = minimist(process.argv.slice(2), {
     output: 'o',
     name: 'n',
     script: 's',
-    file: 'f'
+    file: 'f',
+    wait: 'w'
   }
 });
 
@@ -34,7 +35,12 @@ const bundle = () => {
 };
 
 chokidar
-  .watch(files, { ignoreInitial: true })
+  .watch(files, {
+    ignoreInitial: true,
+    awaitWriteFinish: {
+      stabilityThreshold: args.wait || config.wait
+    }
+  })
   .on('ready', () => {
     console.group('[tic-bundle] watching files');
     files.forEach(file => console.info(file));

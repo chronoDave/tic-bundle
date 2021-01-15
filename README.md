@@ -89,6 +89,7 @@ function TIC() {
 <b>CLI options</b>
 
  - `-r / --root` - Root folder
+ - `-w / --wait` - Wait interval
  - `-c / --config` - Path to config file
  - `-o / --output` - Bundled file output path
  - `-n / --name` - Bundle file name
@@ -112,6 +113,7 @@ The specificity is as folows:
 ```JS
 {
   root: 'src',
+  wait: 200,
   metadata: {
     title: null,
     author: null,
@@ -133,6 +135,7 @@ The specificity is as folows:
 ### Options
 
  - `root` (default `src`) - Folder to watch.
+ - `wait` (default `200`) - [Chokidar awaitWriteFinish.stabilityThreshold](https://github.com/paulmillr/chokidar#performance)
  - `metadata` - [Cartridge metadata](https://github.com/nesbox/TIC-80/wiki#cartridge-metadata)
  - `metadata.title` - The name of the cart.
  - `metadata.author` - The name of the developer.
