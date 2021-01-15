@@ -2,6 +2,7 @@
 const path = require('path');
 const minimist = require('minimist');
 const chokidar = require('chokidar');
+const { performance } = require('perf_hooks');
 
 const readConfig = require('./src/readConfig');
 const createConfig = require('./src/createConfig');
@@ -26,7 +27,11 @@ const config = createConfig(
 );
 
 const files = config.files.map(file => path.resolve(config.root, file));
-const bundle = () => run(args, config);
+const bundle = () => {
+  const ts = performance.now();
+  run(args, config);
+  console.info(`Generated bundle in: ${Math.round(performance.now() - ts)}ms`);
+};
 
 chokidar
   .watch(files, { ignoreInitial: true })
