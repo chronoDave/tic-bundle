@@ -13,6 +13,6 @@ module.exports = path => {
     case 'json':
       return JSON.parse(fs.readFileSync(path));
     default:
-      throw new Error(`Invalid file type: ${fileType}`);
+      return null;
   }
 };

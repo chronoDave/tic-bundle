@@ -42,7 +42,7 @@ module.exports = (args, config) => {
       Object
         .entries(config.metadata)
         .filter(([, value]) => value)
-        .map(([key, value]) => `${key}: ${value}`)
+        .map(([key, value]) => `// ${key}: ${value}`)
         .join('\n'),
       config.after(bundle)
     ].join('\n\n')

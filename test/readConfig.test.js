@@ -44,13 +44,12 @@ test('[readConfig] should read .json config file', t => {
   t.end();
 });
 
-test('[readConfig] should throw error on invalid config', t => {
-  try {
-    readConfig(path.resolve(__dirname, 'config.yml'));
-    t.fail('Expected to throw');
-  } catch (err) {
-    t.pass('throws error');
-  }
+test('[readConfig] should return null on invalid config', t => {
+  t.equal(
+    readConfig(path.resolve(__dirname, 'config.yml')),
+    null,
+    'returns null'
+  );
 
   t.end();
 });

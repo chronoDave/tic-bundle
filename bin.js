@@ -3,6 +3,7 @@ const path = require('path');
 const minimist = require('minimist');
 const chokidar = require('chokidar');
 
+const readConfig = require('./src/readConfig');
 const createConfig = require('./src/createConfig');
 const run = require('./src/run');
 
@@ -17,9 +18,10 @@ const args = minimist(process.argv.slice(2), {
 });
 
 const config = createConfig(
-  args.config ||
-  '.ticbundle.js' ||
-  '.ticbundle.json'
+  readConfig(path.resolve(process.cwd(), args.config)) ||
+  readConfig(path.resolve(process.cwd(), '.ticbundle.js')) ||
+  readConfig(path.resolve(process.cwd(), '.ticbundle.json')) ||
+  {}
 );
 
 const files = config.files.map(file => path.resolve(config.root, file));

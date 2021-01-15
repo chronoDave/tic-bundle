@@ -68,7 +68,7 @@ test('[run] transforms output if `after` is provided', t => {
 
   const fileData = fs.readFileSync(file, { encoding: 'utf-8' });
 
-  t.equal(fileData, 'script: js\n\n', 'overrides bundle output');
+  t.equal(fileData, '// script: js\n\n', 'overrides bundle output');
 
   fs.unlinkSync(file);
 
