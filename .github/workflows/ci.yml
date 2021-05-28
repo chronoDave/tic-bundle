@@ -1,7 +1,5 @@
 name: tic-bundle
 on: [push, pull_request]
-env:
-  WEBHOOK_URL: ${{secrets.WEBHOOK_URL}}
 jobs:
   ci:
     name: Test
@@ -26,15 +24,13 @@ jobs:
         run: yarn --frozen-lockfile
       - name: Test
         run: yarn test
-      - name: On success
+      - name: Discord Webhook (Success)
         if: ${{success()}}
         run: |
-          wget https://raw.githubusercontent.com/chronoDave/user-scripts/master/webhooks/discord_github.sh
-          chmod +x discord_github.sh
-          ./discord_github.sh success
-      - name: On error
+          wget https://raw.githubusercontent.com/chronoDave/user-scripts/master/webhooks/github_discord.js
+          node ./github_discord.js ${{secrets.WEBHOOK_URL}} success
+      - name: Discord Webhook (Failure)
         if: ${{failure()}}
         run: |
-          wget https://raw.githubusercontent.com/chronoDave/user-scripts/master/webhooks/discord_github.sh
-          chmod +x discord_github.sh
-          ./discord_github.sh failure
+          wget https://raw.githubusercontent.com/chronoDave/user-scripts/master/webhooks/github_discord.js
+          node ./github_discord.js ${{secrets.WEBHOOK_URL}} error
