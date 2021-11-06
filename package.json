@@ -2,7 +2,7 @@
   "name": "tic-bundle",
   "description": "Multi-file development in TIC-80",
   "author": "Chronocide",
-  "version": "3.2.0",
+  "version": "3.2.1",
   "bin": "bin.js",
   "main": "bin.js",
   "keywords": [
