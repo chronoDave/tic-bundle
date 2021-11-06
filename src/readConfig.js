@@ -7,12 +7,16 @@ const fs = require('fs');
 module.exports = path => {
   const fileType = path.split('.').pop();
 
-  switch (fileType) {
-    case 'js':
-      return require(path);
-    case 'json':
-      return JSON.parse(fs.readFileSync(path));
-    default:
-      return null;
+  try {
+    switch (fileType) {
+      case 'js':
+        return require(path);
+      case 'json':
+        return JSON.parse(fs.readFileSync(path));
+      default:
+        return null;
+    }
+  } catch (err) {
+    return null;
   }
 };

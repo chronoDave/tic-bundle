@@ -1,6 +1,6 @@
 const test = require('tape');
 
-const createBundle = require('../src/createBundle');
+const createBundle = require('../../src/createBundle');
 
 test('[createBundle] creates valid bundle', t => {
   const bundle = createBundle(__dirname, [

@@ -2,8 +2,8 @@ const test = require('tape');
 const fs = require('fs');
 const path = require('path');
 
-const createConfig = require('../src/createConfig');
-const run = require('../src/run');
+const createConfig = require('../../src/createConfig');
+const run = require('../../src/run');
 
 test('[run] creates valid bundle file', t => {
   const name = 'output';

@@ -18,7 +18,7 @@
   "repository": "https://github.com/chronoDave/tic-bundle.git",
   "license": "GPL-3.0",
   "scripts": {
-    "test": "tape test/*.test.js"
+    "test": "tape test/unit/*.test.js"
   },
   "dependencies": {
     "chokidar": "^3.4.0",

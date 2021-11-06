@@ -1,6 +1,6 @@
 const test = require('tape');
 
-const createConfig = require('../src/createConfig');
+const createConfig = require('../../src/createConfig');
 
 test('[createConfig] creates valid config file if no config file is found', t => {
   const config = createConfig();

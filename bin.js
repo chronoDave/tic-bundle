@@ -21,7 +21,7 @@ const args = minimist(process.argv.slice(2), {
 });
 
 const config = createConfig(
-  readConfig(path.resolve(process.cwd(), args.config)) ||
+  readConfig(path.resolve(process.cwd(), (args.config || ''))) ||
   readConfig(path.resolve(process.cwd(), '.ticbundle.js')) ||
   readConfig(path.resolve(process.cwd(), '.ticbundle.json')) ||
   {}

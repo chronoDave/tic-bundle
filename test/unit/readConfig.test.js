@@ -2,7 +2,7 @@ const test = require('tape');
 const fs = require('fs');
 const path = require('path');
 
-const readConfig = require('../src/readConfig');
+const readConfig = require('../../src/readConfig');
 
 test('[readConfig] should read .js config file', t => {
   const file = path.resolve(__dirname, 'config.js');
@@ -47,6 +47,16 @@ test('[readConfig] should read .json config file', t => {
 test('[readConfig] should return null on invalid config', t => {
   t.equal(
     readConfig(path.resolve(__dirname, 'config.yml')),
+    null,
+    'returns null'
+  );
+
+  t.end();
+});
+
+test('[readConfig] should return null if config does not exist', t => {
+  t.equal(
+    readConfig(path.resolve(__dirname, '.ticbundle.json')),
     null,
     'returns null'
   );
