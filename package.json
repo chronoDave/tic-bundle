@@ -18,6 +18,7 @@
   "repository": "https://github.com/chronoDave/tic-bundle.git",
   "license": "GPL-3.0",
   "scripts": {
+    "lint": "eslint src",
     "test": "tape test/unit/*.test.js"
   },
   "dependencies": {

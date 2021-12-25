@@ -1,3 +1,20 @@
+const getCommentStyle = script => {
+  switch (script) {
+    case 'lua':
+    case 'moon':
+      return '--';
+    case 'fennel':
+      return ';;';
+    case 'ruby':
+      return '#';
+    case 'js':
+    case 'wren':
+    case 'squirrel':
+    default:
+      return '//';
+  }
+};
+
 /**
  * Serialise config for insertion at top of output file
  * @param {object} config - Config
@@ -16,29 +33,12 @@
  * @param {string} config.metadata.input
  * @param {string} config.metadata.saveid
  */
-module.exports = (config) => {
-    const commentStyle = getCommentStyle(config.metadata.script);
+module.exports = config => {
+  const commentStyle = getCommentStyle(config.metadata.script);
 
-    return Object
-        .entries(config.metadata)
-        .filter(([, value]) => value)
-        .map(([key, value]) => `${commentStyle} ${key}: ${value}`)
-        .join('\n');
-};
-
-let getCommentStyle = (script) => {
-    switch(script) {
-        case 'lua':
-        case 'moon':
-            return `--`;
-        case 'fennel':
-            return `;;`;
-        case 'ruby':
-            return `#`;
-        case 'js':
-        case 'wren':
-        case 'squirrel':
-        default:
-            return `//`;
-    }
+  return Object
+    .entries(config.metadata)
+    .filter(([, value]) => value)
+    .map(([key, value]) => `${commentStyle} ${key}: ${value}`)
+    .join('\n');
 };
