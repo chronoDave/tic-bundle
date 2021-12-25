@@ -2,6 +2,7 @@ const path = require('path');
 const fs = require('fs');
 
 const createBundle = require('./createBundle');
+const serialiseMetadata = require('./serialiseMetadata');
 
 /**
  * Bundle
@@ -39,11 +40,7 @@ module.exports = (args, config) => {
       `${args.name || config.output.name}.${args.file || config.output.extension}`
     ),
     [
-      Object
-        .entries(config.metadata)
-        .filter(([, value]) => value)
-        .map(([key, value]) => `// ${key}: ${value}`)
-        .join('\n'),
+      serialiseMetadata(config),
       config.after ?
         config.after(bundle) :
         bundle
