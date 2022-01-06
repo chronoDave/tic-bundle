@@ -6,7 +6,7 @@
 
 # tic-bundle
 
-Simple CLI tool for bundling [TIC-80](https://tic.computer/) cartridge code. Supports any language!
+Simple CLI tool for bundling [TIC-80](https://tic80.com/) cartridge code. Supports any language!
 
 ## Content
 
