@@ -35,9 +35,10 @@ npm i tic-bundle --save-dev
 
 <b>Config</b>
 
-```JS
+```JSON
 {
-  files: ['ui.js', 'main.js']
+  "files": ["ui.js", "main.js"],
+  "assets": ["assets.js"]
 }
 ```
 
@@ -45,25 +46,39 @@ npm i tic-bundle --save-dev
 
 `src/main.js`
 
-```
+```JS
 function TIC() {
 
 };
+
+// <TILES>
+// 000:0100000010100000010000000000000000000000000000000000000000000000
+// </TILES>
 ```
 
 `src/ui.js`
 
-```
+```JS
 function ui() {
   return 'ui';
 };
+```
+
+`src/assets.js`
+
+```JS
+// script: js
+
+// <TILES>
+// 000:0100000010100000010000000000000000000000000000000000000000000000
+// </TILES>
 ```
 
 <b>Output</b>
 
 `build.js`
 
-```
+```JS
 // script: js
 
 function ui() {
@@ -73,6 +88,10 @@ function ui() {
 function TIC() {
 
 };
+
+// <TILES>
+// 000:0100000010100000010000000000000000000000000000000000000000000000
+// </TILES>
 ```
 
 ## CLI
@@ -104,9 +123,9 @@ function TIC() {
 
 The specificity is as folows:
 
- - CLI
  - `.ticbundle.js`
  - `.ticbundle.json`
+ - CLI
  - Default config
 
 <b>Default config</b>
@@ -129,6 +148,7 @@ The specificity is as folows:
     name: 'build'
   },
   files: [],
+  assets: [],
   after: null
 }
 ```
@@ -147,7 +167,8 @@ The specificity is as folows:
  - `output.path` (default `./`) - Bundled file output path.
  - `output.extension` (default `js`) - Bundle file output extension
  - `output.name` (default `build`) - Bundled file name.
- - `files` - Files to bundle. Files will be ordered by index (top first, bottom last).
+ - `files` - Files to bundle. Asset data will be stripped (graphics data, sprite data, etc.) Files will be ordered by index (top first, bottom last).
+  - `assets` - Assets to bundle. Code data will be stripped. Assets will be ordered by index (top first, bottom last) and are always places below `files`.
  - `after` - Run after generating the bundle, this can be used to further modify the bundle.
 
 ### Babel

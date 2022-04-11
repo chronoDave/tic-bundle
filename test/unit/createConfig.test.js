@@ -15,17 +15,42 @@ test('[createConfig] creates valid config file if no config file is found', t =>
 });
 
 test('[createConfig] normalizes invalid config values', t => {
-  const after = bundle => bundle.trim();
-  const root = 0;
-  const config = createConfig({ root, test: 'value', after });
+  const root = 'input';
+  const wait = '100';
+  const config = createConfig({ root, test: 'value', wait });
 
-  t.equal(
-    config.root,
-    'src',
-    'normalizes invalid value'
+  t.equal(config.root, root, 'does not overwrite valid value');
+  t.false(config.test, 'does not create invalid key');
+  t.notEqual(config.wait, wait, 'overwrites invalid value');
+
+  t.end();
+});
+
+test('[createConfig] creates default config file', t => {
+  t.deepEqual(
+    createConfig(),
+    {
+      root: 'src',
+      wait: 200,
+      metadata: {
+        title: null,
+        author: null,
+        desc: null,
+        script: 'js',
+        input: null,
+        saveid: null
+      },
+      output: {
+        path: './',
+        extension: 'js',
+        name: 'build'
+      },
+      files: [],
+      assets: [],
+      after: null
+    },
+    'creates valid default config'
   );
-  t.false(config.test, 'does not contain invalid key');
-  t.equal(config.after, after, 'retains valid value');
 
   t.end();
 });

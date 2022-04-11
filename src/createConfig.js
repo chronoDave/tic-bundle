@@ -1,79 +1,43 @@
-const objectGet = require('lodash.get');
+const get = require('lodash.get');
 
 /**
  * Create config file
  * @param {object} config - Config
  */
 module.exports = config => {
-  const defaultConfig = {
-    root: 'src',
-    wait: 200,
-    metadata: {
-      title: null,
-      author: null,
-      desc: null,
-      script: 'js',
-      input: null,
-      saveid: null
-    },
-    output: {
-      path: './',
-      extension: 'js',
-      name: 'build'
-    },
-    files: [],
-    after: bundle => bundle
+  const normalize = validate => (key, valueDefault) => {
+    if (typeof config !== 'object') return valueDefault;
+
+    const valueConfig = get(config, key);
+    if (validate(valueConfig)) return valueConfig;
+    if (valueConfig !== undefined) console.error(`[tic-bundle] Invalid property: ${key}`);
+
+    return valueDefault;
   };
 
-  try {
-    const normalizeNumber = key => {
-      const value = objectGet(config, key);
-      if (typeof value !== 'number') return objectGet(defaultConfig, key);
-      return value;
-    };
+  const normalizeString = normalize(x => typeof x === 'string');
+  const normalizeNumber = normalize(x => typeof x === 'number');
+  const normalizeArray = normalize(x => Array.isArray(x) && x.every(y => typeof y === 'string'));
+  const normalizeFunc = normalize(x => typeof x === 'function');
 
-    const normalizeString = key => {
-      const value = objectGet(config, key);
-      if (typeof value !== 'string') return objectGet(defaultConfig, key);
-      return value;
-    };
-
-    const normalizeArray = (key, filter) => {
-      const value = objectGet(config, key);
-      if (!Array.isArray(value) || value.some(filter)) return objectGet(defaultConfig, key);
-      return value;
-    };
-
-    const normalizeFunc = key => {
-      const value = objectGet(config, key);
-      if (typeof value !== 'function') return objectGet(defaultConfig, key);
-      return value;
-    };
-
-    return ({
-      root: normalizeString('root'),
-      wait: normalizeNumber('wait'),
-      ignore: normalizeArray('ignore', value => typeof value !== 'string'),
-      metadata: {
-        title: normalizeString('metadata.title'),
-        author: normalizeString('metadata.author'),
-        description: normalizeString('metadata.description'),
-        script: normalizeString('metadata.script'),
-        input: normalizeString('metadata.input'),
-        saveid: normalizeString('metadata.saveid')
-      },
-      output: {
-        path: normalizeString('output.path'),
-        extension: normalizeString('output.extension'),
-        name: normalizeString('output.name')
-      },
-      files: normalizeArray('files', value => typeof value !== 'string'),
-      after: normalizeFunc('after')
-    });
-  } catch (err) {
-    console.error(`[tic-bundle] ${err.message}`);
-    console.info('[tic-bundle] Using default config');
-
-    return defaultConfig;
-  }
+  return ({
+    root: normalizeString('root', 'src'),
+    wait: normalizeNumber('wait', 200),
+    metadata: {
+      title: normalizeString('metadata.title', null),
+      author: normalizeString('metadata.author', null),
+      desc: normalizeString('metadata.desc', null),
+      script: normalizeString('metadata.script', 'js'),
+      input: normalizeString('metadata.input', null),
+      saveid: normalizeString('metadata.saveid', null),
+    },
+    output: {
+      path: normalizeString('output.path', './'),
+      extension: normalizeString('output.extension', 'js'),
+      name: normalizeString('output.name', 'build')
+    },
+    files: normalizeArray('files', []),
+    assets: normalizeArray('assets', []),
+    after: normalizeFunc('after', null)
+  });
 };

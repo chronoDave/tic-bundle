@@ -24,13 +24,26 @@ const config = createConfig(
   readConfig(path.resolve(process.cwd(), (args.config || ''))) ||
   readConfig(path.resolve(process.cwd(), '.ticbundle.js')) ||
   readConfig(path.resolve(process.cwd(), '.ticbundle.json')) ||
-  {}
+  {
+    root: args.root,
+    wait: typeof args.wait === 'string' && args.wait.length > 0 ?
+      +args.wait :
+      undefined,
+    metadata: {
+      script: args.script
+    },
+    output: {
+      path: args.output,
+      extension: args.file,
+      name: args.name,
+    }
+  }
 );
 
 const files = config.files.map(file => path.resolve(config.root, file));
 const bundle = () => {
   const ts = performance.now();
-  run(args, config);
+  run(config);
   console.info(`Generated bundle in: ${Math.round(performance.now() - ts)}ms`);
 };
 
@@ -38,7 +51,7 @@ chokidar
   .watch(files, {
     ignoreInitial: true,
     awaitWriteFinish: {
-      stabilityThreshold: args.wait || config.wait
+      stabilityThreshold: config.wait
     }
   })
   .on('ready', () => {

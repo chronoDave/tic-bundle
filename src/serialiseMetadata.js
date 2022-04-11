@@ -1,19 +1,6 @@
-const getCommentStyle = script => {
-  switch (script) {
-    case 'lua':
-    case 'moon':
-      return '--';
-    case 'fennel':
-      return ';;';
-    case 'ruby':
-      return '#';
-    case 'js':
-    case 'wren':
-    case 'squirrel':
-    default:
-      return '//';
-  }
-};
+const { EOL } = require('os');
+
+const { getCommentStyle } = require('./utils');
 
 /**
  * Serialise config for insertion at top of output file
@@ -33,12 +20,8 @@ const getCommentStyle = script => {
  * @param {string} config.metadata.input
  * @param {string} config.metadata.saveid
  */
-module.exports = config => {
-  const commentStyle = getCommentStyle(config.metadata.script);
-
-  return Object
-    .entries(config.metadata)
-    .filter(([, value]) => value)
-    .map(([key, value]) => `${commentStyle} ${key}: ${value}`)
-    .join('\n');
-};
+module.exports = config => Object
+  .entries(config.metadata)
+  .filter(([, value]) => value)
+  .map(([key, value]) => `${getCommentStyle(config.metadata.script)} ${key}: ${value}`)
+  .join(EOL);

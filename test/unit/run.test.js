@@ -1,6 +1,7 @@
 const test = require('tape');
 const fs = require('fs');
 const path = require('path');
+const { EOL } = require('os');
 
 const createConfig = require('../../src/createConfig');
 const run = require('../../src/run');
@@ -15,7 +16,7 @@ test('[run] creates valid bundle file', t => {
   });
   const file = path.resolve(__dirname, `${name}.${type}`);
 
-  run({}, config, type);
+  run(config);
 
   t.true(fs.existsSync(file), 'creates output file');
 
@@ -40,7 +41,7 @@ test('[run] accepts metadata', t => {
   });
   const file = path.resolve(__dirname, `${name}.js`);
 
-  run({}, config);
+  run(config);
 
   const fileData = fs.readFileSync(file, { encoding: 'utf-8' });
 
@@ -62,13 +63,13 @@ test('[run] transforms output if `after` is provided', t => {
   });
   const file = path.resolve(__dirname, `${name}.${type}`);
 
-  run({}, config, type);
+  run(config);
 
   t.true(fs.existsSync(file), 'creates output file');
 
   const fileData = fs.readFileSync(file, { encoding: 'utf-8' });
 
-  t.equal(fileData, '// script: js\n\n', 'overrides bundle output');
+  t.equal(fileData, `// script: js${EOL}${EOL}`, 'overrides bundle output');
 
   fs.unlinkSync(file);
 

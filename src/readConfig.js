@@ -1,18 +1,19 @@
 const fs = require('fs');
+const path = require('path');
 
 /**
  * Read config file
- * @param filePath - Absolute path
+ * @param file - Absolute path to file
  */
-module.exports = path => {
-  const fileType = path.split('.').pop();
+module.exports = file => {
+  const { ext } = path.parse(file);
 
   try {
-    switch (fileType) {
-      case 'js':
-        return require(path);
-      case 'json':
-        return JSON.parse(fs.readFileSync(path));
+    switch (ext) {
+      case '.js':
+        return require(file);
+      case '.json':
+        return JSON.parse(fs.readFileSync(file));
       default:
         return null;
     }

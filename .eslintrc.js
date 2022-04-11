@@ -2,6 +2,7 @@ module.exports = {
   extends: 'airbnb-base',
   rules: {
     // General
+    'no-confusing-arrow': 'off',
     'operator-linebreak': ['error', 'after'],
     'linebreak-style': 'off',
     'comma-dangle': 'off',
