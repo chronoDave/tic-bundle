@@ -19,7 +19,7 @@
   "license": "GPL-3.0",
   "scripts": {
     "lint": "eslint src",
-    "test": "tape test/unit/*.test.js"
+    "test": "npm run lint && tape test/unit/*.test.js"
   },
   "dependencies": {
     "chokidar": "^3.4.0",
