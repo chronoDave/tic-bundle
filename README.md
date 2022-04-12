@@ -3,7 +3,6 @@
 [![license GPLv3](https://img.shields.io/badge/license-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 [![npm](https://img.shields.io/npm/v/tic-bundle?label=npm)](https://www.npmjs.com/package/tic-bundle)
 [![ci](https://github.com/chronoDave/tic-bundle/actions/workflows/ci.yml/badge.svg)](https://github.com/chronoDave/tic-bundle/actions/workflows/ci.yml)
-[![codeql](https://github.com/chronoDave/tic-bundle/actions/workflows/codeql.yml/badge.svg)](https://github.com/chronoDave/tic-bundle/actions/workflows/codeql.yml)
 
 # tic-bundle
 
