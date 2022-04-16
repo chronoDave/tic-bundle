@@ -114,6 +114,7 @@ function TIC() {
  - `-n / --name` - Bundle file name
  - `-f / --file` - Bundle file extension
  - `-s / --script` - Language
+ - `-b / --build` - Build
 
 
 ## Configuration
