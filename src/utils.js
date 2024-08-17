@@ -6,6 +6,7 @@ const getCommentStyle = script => {
     case 'fennel':
       return ';;';
     case 'ruby':
+    case 'python':
       return '#';
     case 'js':
     case 'wren':
