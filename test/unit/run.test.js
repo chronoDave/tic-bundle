@@ -69,7 +69,7 @@ test('[run] transforms output if `after` is provided', t => {
 
   const fileData = fs.readFileSync(file, { encoding: 'utf-8' });
 
-  t.equal(fileData, `// script: js${EOL}${EOL}`, 'overrides bundle output');
+  t.equal(fileData, `// script: js${EOL}// license: MIT License (change this to your license of choice)${EOL}${EOL}`, 'overrides bundle output');
 
   fs.unlinkSync(file);
 
