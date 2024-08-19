@@ -37,6 +37,9 @@ test('[createConfig] creates default config file', t => {
         author: null,
         desc: null,
         script: 'js',
+        site: null,
+        license: 'MIT License (change this to your license of choice)',
+        version: null,
         input: null,
         saveid: null
       },

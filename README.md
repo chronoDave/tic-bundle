@@ -139,6 +139,9 @@ The specificity is as folows:
     author: null,
     desc: null,
     script: 'js',
+    site: null,
+    license: "MIT License (change this to your license of choice)",
+    version: null,
     input: null,
     saveid: null
   },
@@ -162,6 +165,9 @@ The specificity is as folows:
  - `metadata.author` - The name of the developer.
  - `metadata.description` - Optional description of the game.
  - `metadata.script` (default `js`) - Used scripting language.
+ - `metadata.site` - Website of the game.
+ - `metadata.license` (default `MIT License (change this to your license of choice)`) - License of the game.
+ - `metadata.version` - Version of the game.
  - `metadata.input` - Selects gamepad, mouse or keyboard input source.
  - `metadata.saveid` - Allows save data to be shared within multiple games on a copy of TIC.
  - `output.path` (default `./`) - Bundled file output path.
