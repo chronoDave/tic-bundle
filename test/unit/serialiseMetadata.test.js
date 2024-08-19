@@ -23,6 +23,7 @@ const testMetadataFormat = (script, expected) => t => {
   { lang: 'moon', script: 'moon', expected: '-- script:' },
   { lang: 'fennel', script: 'fennel', expected: ';; script:' },
   { lang: 'ruby', script: 'ruby', expected: '# script:' },
+  { lang: 'python', script: 'python', expected: '# script:' },
   { lang: 'wren', script: 'wren', expected: '// script:' },
   { lang: 'squirrel', script: 'squirrel', expected: '// script:' }
 ].forEach(({ lang, script, expected }) => test(
