@@ -41,7 +41,11 @@ const config = createConfig(
   }
 );
 
-const files = config.files.map(file => path.resolve(config.root, file));
+const files = [
+  ...config.files.map(file => path.resolve(config.root, file)),
+  ...config.assets.map(file => path.resolve(config.root, file))
+];
+
 const bundle = () => {
   const ts = performance.now();
   run(config);
